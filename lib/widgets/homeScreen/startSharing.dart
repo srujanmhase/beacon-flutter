@@ -189,8 +189,12 @@ class _startSharingState extends State<startSharing> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => shareScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => shareScreen(
+                                bCode: _bCodeGenerated,
+                              )));
                 },
                 child: Container(
                   width: 250,

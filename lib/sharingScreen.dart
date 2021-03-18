@@ -9,6 +9,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
 
 class shareScreen extends StatefulWidget {
+  final String bCode;
+  const shareScreen({this.bCode});
+
   @override
   _shareScreenState createState() => _shareScreenState();
 }
@@ -106,7 +109,7 @@ class _shareScreenState extends State<shareScreen> {
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white),
                               ),
-                              Text("3xDB778oop",
+                              Text(widget.bCode,
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.white))
                             ],
@@ -176,40 +179,6 @@ class _shareScreenState extends State<shareScreen> {
   }
 }
 
-// class mapView extends StatefulWidget {
-//   @override
-//   _mapViewState createState() => _mapViewState();
-// }
-
-// class _mapViewState extends State<mapView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return FlutterMap(
-//       options: MapOptions(center: LatLng(19.202609, 72.970689), zoom: 13.0),
-//       layers: [
-//         TileLayerOptions(
-//             urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-//             subdomains: ['a', 'b', 'c']),
-//         MarkerLayerOptions(
-//           markers: [
-//             Marker(
-//               width: 80.0,
-//               height: 80.0,
-//               point: LatLng(19.202609, 72.970689),
-//               builder: (ctx) => Container(
-//                 child: FaIcon(
-//                   FontAwesomeIcons.mapMarker,
-//                   color: Colors.blue,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class googleMapsView extends StatefulWidget {
   final double latitude;
   final double longitude;
@@ -272,18 +241,6 @@ class _mapStateGeoState extends State<mapStateGeo> {
     );
   }
 
-  // locationUtility() async {
-  //   await Geolocator.getCurrentPosition().then((value) => {
-  //         if (mounted)
-  //           {
-  //             setState(() {
-  //               lat = value.latitude;
-  //               long = value.longitude;
-  //               print("I just pinged location");
-  //             })
-  //           }
-  //       });
-  // }
   final positionStream = Geolocator.getPositionStream();
 
   locationUtility() {
