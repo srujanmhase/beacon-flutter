@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'widgets/sharingScreen/currentWatching.dart';
@@ -41,7 +42,7 @@ class _shareScreenState extends State<shareScreen> {
                     height: screenHeight(context, mulBy: 0.7),
                     width: screenWidth(context, mulBy: 1),
                     decoration: BoxDecoration(color: Colors.grey[300]),
-                    child: googleMapsView(),
+                    child: mapStateGeo(),
                   ),
                 ],
               ),
@@ -210,32 +211,35 @@ class _shareScreenState extends State<shareScreen> {
 // }
 
 class googleMapsView extends StatefulWidget {
+  final double latitude;
+  final double longitude;
+
+  const googleMapsView({this.latitude, this.longitude});
+
   @override
   _googleMapsViewState createState() => _googleMapsViewState();
 }
 
 class _googleMapsViewState extends State<googleMapsView> {
-  CameraPosition _initialPosition =
-      CameraPosition(target: LatLng(19.202609, 72.970689), zoom: 10);
-
-  // Position _position = await determinePosition();
-
   Completer<GoogleMapController> _mapController = Completer();
 
   void _onMapCreated(GoogleMapController controller) async {
     _mapController.complete(controller);
   }
 
-  Set<Marker> _markers = Set.from([
-    Marker(
-        markerId: MarkerId('newyork'),
-        position: LatLng(19.202609, 72.970689),
-        infoWindow:
-            InfoWindow(title: 'New York', snippet: 'Welcome to New York')),
-  ]);
-
   @override
   Widget build(BuildContext context) {
+    double latitude = widget.latitude;
+    double longitude = widget.longitude;
+
+    Set<Marker> _markers = Set.from([
+      Marker(
+        markerId: MarkerId('newyork'),
+        position: LatLng(latitude, longitude),
+      ),
+    ]);
+    CameraPosition _initialPosition =
+        CameraPosition(target: LatLng(latitude, longitude), zoom: 10);
     return GoogleMap(
       onMapCreated: _onMapCreated,
       markers: _markers,
@@ -253,39 +257,49 @@ class mapStateGeo extends StatefulWidget {
 }
 
 class _mapStateGeoState extends State<mapStateGeo> {
-  final List<_PositionItem> _positionItems = <_PositionItem>[];
   StreamSubscription<Position> _positionStreamSubscription;
 
+  double lat;
+  double long;
   @override
   Widget build(BuildContext context) {
-    return Container();
+    locationUtility();
+    if (lat != null) {
+      return googleMapsView(latitude: lat, longitude: long);
+    }
+    return Center(
+      child: CupertinoActivityIndicator(),
+    );
   }
 
-  bool _isListening() => !(_positionStreamSubscription == null ||
-      _positionStreamSubscription.isPaused);
+  // locationUtility() async {
+  //   await Geolocator.getCurrentPosition().then((value) => {
+  //         if (mounted)
+  //           {
+  //             setState(() {
+  //               lat = value.latitude;
+  //               long = value.longitude;
+  //               print("I just pinged location");
+  //             })
+  //           }
+  //       });
+  // }
+  final positionStream = Geolocator.getPositionStream();
 
-  void _toggleListening() {
-    if (_positionStreamSubscription == null) {
-      final positionStream = Geolocator.getPositionStream();
-      _positionStreamSubscription = positionStream.handleError((error) {
-        _positionStreamSubscription?.cancel();
-        _positionStreamSubscription = null;
-      }).listen((position) => setState(() => _positionItems.add(
-          _PositionItem(_PositionItemType.position, position.toString()))));
-      _positionStreamSubscription?.pause();
-    }
-
-    setState(() {
-      if (_positionStreamSubscription == null) {
-        return;
-      }
-
-      if (_positionStreamSubscription.isPaused) {
-        _positionStreamSubscription.resume();
-      } else {
-        _positionStreamSubscription.pause();
-      }
-    });
+  locationUtility() {
+    _positionStreamSubscription = positionStream.handleError((error) {
+      _positionStreamSubscription?.cancel();
+      _positionStreamSubscription = null;
+    }).listen((position) => {
+          if (mounted)
+            {
+              setState(() {
+                lat = position.latitude;
+                long = position.longitude;
+                print("I just pinged location");
+              })
+            }
+        });
   }
 
   @override
@@ -297,16 +311,4 @@ class _mapStateGeoState extends State<mapStateGeo> {
 
     super.dispose();
   }
-}
-
-enum _PositionItemType {
-  permission,
-  position,
-}
-
-class _PositionItem {
-  _PositionItem(this.type, this.displayValue);
-
-  final _PositionItemType type;
-  final String displayValue;
 }
