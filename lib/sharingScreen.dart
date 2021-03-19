@@ -8,6 +8,8 @@ import 'widgets/sharingScreen/currentWatching.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'widgets/gmap.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class shareScreen extends StatefulWidget {
   final String bCode;
@@ -37,6 +39,47 @@ class _shareScreenState extends State<shareScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final positionStream = Geolocator.getPositionStream();
+    var lastUploaded = DateTime.now();
+
+    DocumentReference locationDoc =
+        FirebaseFirestore.instance.collection('live').doc(widget.bCode);
+    Future<void> addLocation(time) {
+      // Call the user's CollectionReference to add a new user
+      return locationDoc
+          .set({
+            'lat': lat,
+            'long': long,
+            'time': time,
+          })
+          .then((value) => print("Location Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
+
+    shouldUpload(Position position) {
+      var now = DateTime.now();
+      var difference = now.difference(lastUploaded);
+      if (difference.inSeconds > 10) {
+        //upload
+        addLocation(now);
+        setState(() {
+          lat = position.latitude;
+          long = position.longitude;
+          print("I just uploaded $now");
+        });
+        lastUploaded = DateTime.now();
+      }
+    }
+
+    locationUtility() {
+      _positionStreamSubscription = positionStream.handleError((error) {
+        _positionStreamSubscription?.cancel();
+        _positionStreamSubscription = null;
+      }).listen((position) => {
+            if (mounted) {shouldUpload(position)}
+          });
+    }
+
     locationUtility();
     if (lat != null) {
       return WillPopScope(
@@ -232,32 +275,6 @@ class _shareScreenState extends State<shareScreen> {
         child: CupertinoActivityIndicator(),
       ),
     );
-  }
-
-  final positionStream = Geolocator.getPositionStream();
-  var lastUploaded = DateTime.now();
-
-  shouldUpload(Position position) {
-    var now = DateTime.now();
-    var difference = now.difference(lastUploaded);
-    if (difference.inSeconds > 10) {
-      //upload
-      setState(() {
-        lat = position.latitude;
-        long = position.longitude;
-        print("I just uploaded $now");
-      });
-      lastUploaded = DateTime.now();
-    }
-  }
-
-  locationUtility() {
-    _positionStreamSubscription = positionStream.handleError((error) {
-      _positionStreamSubscription?.cancel();
-      _positionStreamSubscription = null;
-    }).listen((position) => {
-          if (mounted) {shouldUpload(position)}
-        });
   }
 
   @override
