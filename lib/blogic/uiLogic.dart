@@ -1,9 +1,13 @@
+import 'package:beacon/trackingScreen.dart';
+import 'package:beacon/widgets/homeScreen/startTracking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../sharingScreen.dart';
 
 createCupDiag(BuildContext context) {
+  TextEditingController bCodeController = new TextEditingController();
+
   return showCupertinoDialog(
       context: context,
       builder: (context) {
@@ -18,6 +22,7 @@ createCupDiag(BuildContext context) {
                   height: 10,
                 ),
                 TextFormField(
+                  controller: bCodeController,
                   decoration: InputDecoration(
                     labelText: "BCode",
                     filled: true,
@@ -30,8 +35,10 @@ createCupDiag(BuildContext context) {
             CupertinoButton(
                 child: Text("Done"),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => shareScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => trackingScreen(
+                            bCode: bCodeController.text,
+                          )));
                 }),
             CupertinoButton(
                 child: Text(
