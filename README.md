@@ -2,7 +2,7 @@
 
 Current Status:
  - Main branch - UI Prototype with functional native Google maps SDK Integration, Firebase Integration and Location Transmission logic added.
- 
+
  - Second Branch - Adding Business Logic locally and Firebase APIs (done partially)
 
 ## APK
@@ -26,5 +26,5 @@ Users can track others using their respective BCodes and join the session.
 
 NOTE: UI Mockup done, Functionality yet to be implemented (as of 19/03/2021)
 
-![image info](/images/database.jpg)
+![image info](/images/database.JPG)
 Location being uploaded to the database. This is the document reference (address) the users who wish to track using BCode will be constantly getting updates from.
