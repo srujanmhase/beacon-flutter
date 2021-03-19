@@ -9,8 +9,10 @@ import 'widgets/homeScreen/header.dart';
 import 'widgets/homeScreen/startSharing.dart';
 import 'sharingScreen.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -20,8 +22,35 @@ class MyApp extends StatelessWidget {
     FlutterStatusbarcolor.setStatusBarColor(Color(0xff4E5FF8));
     return MaterialApp(
       title: 'Flutter Demo',
-      home: MyHomePage(),
+      home: App(),
       debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class App extends StatelessWidget {
+  // Create the initialization Future outside of `build`:
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return errorState();
+        }
+
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MyHomePage();
+        }
+
+        // Otherwise, show something whilst waiting for initialization to complete
+        return loading();
+      },
     );
   }
 }
@@ -88,6 +117,51 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class loading extends StatefulWidget {
+  @override
+  _loadingState createState() => _loadingState();
+}
+
+class _loadingState extends State<loading> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Initializing Firebase"),
+          SizedBox(
+            height: 20,
+          ),
+          CupertinoActivityIndicator(),
+        ],
+      ),
+    );
+  }
+}
+
+class errorState extends StatefulWidget {
+  @override
+  _errorStateState createState() => _errorStateState();
+}
+
+class _errorStateState extends State<errorState> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Column(
+        children: [
+          Icon(Icons.warning),
+          SizedBox(
+            height: 20,
+          ),
+          Text("Error Initialising Firebase")
+        ],
       ),
     );
   }
