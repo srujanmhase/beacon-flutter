@@ -18,7 +18,8 @@ class _currentWatchingState extends State<currentWatching> {
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey[500],
+                  //color: Colors.grey[500],
+                  color: Color(0xff4E5FF8).withOpacity(0.7),
                   offset: Offset(2, 2),
                   blurRadius: 6,
                   spreadRadius: 2,

@@ -236,20 +236,28 @@ class _shareScreenState extends State<shareScreen> {
   }
 
   final positionStream = Geolocator.getPositionStream();
+  var lastUploaded = DateTime.now();
+
+  shouldUpload(Position position) {
+    var now = DateTime.now();
+    var difference = now.difference(lastUploaded);
+    if (difference.inSeconds > 10) {
+      //upload
+      setState(() {
+        lat = position.latitude;
+        long = position.longitude;
+        print("I just uploaded $now");
+      });
+      lastUploaded = DateTime.now();
+    }
+  }
 
   locationUtility() {
     _positionStreamSubscription = positionStream.handleError((error) {
       _positionStreamSubscription?.cancel();
       _positionStreamSubscription = null;
     }).listen((position) => {
-          if (mounted)
-            {
-              setState(() {
-                lat = position.latitude;
-                long = position.longitude;
-                print("I just pinged location");
-              })
-            }
+          if (mounted) {shouldUpload(position)}
         });
   }
 
