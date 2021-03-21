@@ -10,6 +10,9 @@ import 'package:clipboard/clipboard.dart';
 import 'package:share_plus/share_plus.dart';
 
 class startSharing extends StatefulWidget {
+  final String bCodeGenerated;
+  const startSharing({this.bCodeGenerated});
+
   @override
   _startSharingState createState() => _startSharingState();
 }
@@ -27,19 +30,10 @@ class _startSharingState extends State<startSharing> {
     return screenSize(context).width * mulBy;
   }
 
-  void _generateNewBCode() {
-    String _nBCodeGenerated = randomAlphaNumeric(10);
-    setState(() {
-      _bCodeGenerated = _nBCodeGenerated;
-    });
-  }
-
-  String _bCodeGenerated;
   String dropdownValue = '10 Minutes';
 
   @override
   Widget build(BuildContext context) {
-    _generateNewBCode();
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -93,7 +87,7 @@ class _startSharingState extends State<startSharing> {
                               Expanded(
                                 child: Center(
                                   child: Text(
-                                    _bCodeGenerated,
+                                    widget.bCodeGenerated,
                                     style: TextStyle(
                                         color: Colors.grey[800], fontSize: 18),
                                   ),
@@ -103,7 +97,8 @@ class _startSharingState extends State<startSharing> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      FlutterClipboard.copy(_bCodeGenerated)
+                                      FlutterClipboard.copy(
+                                              widget.bCodeGenerated)
                                           .then((value) {
                                         final snackbar = SnackBar(
                                             content: Text(
@@ -121,17 +116,8 @@ class _startSharingState extends State<startSharing> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      _generateNewBCode();
-                                    },
-                                    child: Icon(Icons.autorenew),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
                                       Share.share(
-                                          'Track me on a map using my BCode $_bCodeGenerated',
+                                          'Track me on a map using my BCode ${widget.bCodeGenerated}',
                                           subject: 'Look what I made!');
                                     },
                                     child:
@@ -193,7 +179,9 @@ class _startSharingState extends State<startSharing> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => shareScreen(
-                                bCode: _bCodeGenerated,
+                                bCode: widget.bCodeGenerated,
+                                duration: dropdownValue,
+                                startTime: DateTime.now(),
                               )));
                 },
                 child: Container(

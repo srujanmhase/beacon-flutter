@@ -43,6 +43,7 @@ dependencies:
       ref: v2.0.0-nullsafety
   firebase_core: ^1.0.1
   cloud_firestore: ^1.0.1
+  workmanager: ^0.2.3
 
 dev_dependencies:
   flutter_test:

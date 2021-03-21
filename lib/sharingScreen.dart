@@ -8,12 +8,15 @@ import 'widgets/sharingScreen/currentWatching.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'widgets/gmap.dart';
+import 'blogic/locationUtility.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class shareScreen extends StatefulWidget {
   final String bCode;
-  const shareScreen({this.bCode});
+  final String duration;
+  final DateTime startTime;
+  const shareScreen({this.bCode, this.duration, this.startTime});
 
   @override
   _shareScreenState createState() => _shareScreenState();
@@ -32,55 +35,17 @@ class _shareScreenState extends State<shareScreen> {
     return screenSize(context).width * mulBy;
   }
 
-  StreamSubscription<Position> _positionStreamSubscription;
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  double lat;
-  double long;
+  double lat = 25;
+  double long = 34;
 
   @override
   Widget build(BuildContext context) {
-    final positionStream = Geolocator.getPositionStream();
-    var lastUploaded = DateTime.now();
-
-    DocumentReference locationDoc =
-        FirebaseFirestore.instance.collection('live').doc(widget.bCode);
-    Future<void> addLocation(time) {
-      // Call the user's CollectionReference to add a new user
-      return locationDoc
-          .set({
-            'lat': lat,
-            'long': long,
-            'time': time,
-          })
-          .then((value) => print("Location Added"))
-          .catchError((error) => print("Failed to add user: $error"));
-    }
-
-    shouldUpload(Position position) {
-      var now = DateTime.now();
-      var difference = now.difference(lastUploaded);
-      if (difference.inSeconds > 10) {
-        //upload
-        addLocation(now);
-        setState(() {
-          lat = position.latitude;
-          long = position.longitude;
-          print("I just uploaded $now");
-        });
-        lastUploaded = DateTime.now();
-      }
-    }
-
-    locationUtility() {
-      _positionStreamSubscription = positionStream.handleError((error) {
-        _positionStreamSubscription?.cancel();
-        _positionStreamSubscription = null;
-      }).listen((position) => {
-            if (mounted) {shouldUpload(position)}
-          });
-    }
-
-    locationUtility();
+    uploadUtility(widget.startTime, widget.duration, widget.bCode);
     if (lat != null) {
       return WillPopScope(
         onWillPop: () async => false,
@@ -233,6 +198,7 @@ class _shareScreenState extends State<shareScreen> {
                                   flex: 1,
                                   child: ElevatedButton(
                                       onPressed: () {
+                                        //deleteInstance(docRef);
                                         Navigator.pop(context);
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -271,19 +237,16 @@ class _shareScreenState extends State<shareScreen> {
       );
     }
     return Material(
-      child: Center(
-        child: CupertinoActivityIndicator(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CupertinoActivityIndicator(),
+          SizedBox(
+            height: 20,
+          ),
+          Text("Initializing Session")
+        ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    if (_positionStreamSubscription != null) {
-      _positionStreamSubscription.cancel();
-      _positionStreamSubscription = null;
-    }
-
-    super.dispose();
   }
 }

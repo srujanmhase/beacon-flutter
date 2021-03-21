@@ -3,6 +3,7 @@ import 'package:beacon/widgets/homeScreen/startTracking.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:random_string/random_string.dart';
 import 'dart:ui';
 import 'widgets/homeScreen/bgStack.dart';
 import 'widgets/homeScreen/header.dart';
@@ -61,9 +62,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String bCodeGenerated;
+  void _generateNewBCode() {
+    String _nBCodeGenerated = randomAlphaNumeric(10);
+    setState(() {
+      bCodeGenerated = _nBCodeGenerated;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    _generateNewBCode();
   }
 
   @override
@@ -104,7 +114,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(
                           height: 50,
                         ),
-                        startSharing(),
+                        startSharing(
+                          bCodeGenerated: bCodeGenerated,
+                        ),
                         SizedBox(
                           height: 20,
                         ),
