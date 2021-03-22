@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:beacon/blogic/locationUtility.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:beacon/main.dart';
@@ -175,6 +176,7 @@ class _startSharingState extends State<startSharing> {
               ),
               InkWell(
                 onTap: () {
+                  onScreen = true;
                   Navigator.push(
                       context,
                       MaterialPageRoute(
