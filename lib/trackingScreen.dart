@@ -65,6 +65,21 @@ class _trackingScreenState extends State<trackingScreen> {
             ],
           ));
         }
+        if (!snapshot.data.exists) {
+          return Material(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Location sharing has been stopped"),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("Back"))
+              ],
+            ),
+          );
+        }
         if (snapshot.data.data()['lat'] != null) {
           return WillPopScope(
             onWillPop: () async => false,
