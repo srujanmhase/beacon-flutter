@@ -10,7 +10,7 @@ Users sharing the location as well as those tracking the location will see how m
 
 ## Current Status:
  - Main branch - UI Prototype with functional ~~native Google maps SDK~~ Azure Maps Integration (Screenshots to be updated), Firebase Integration and Location Transmission, Location tracking as well as concurrent watching logic added.
-- Issues relating to tracking page while stream is terminated yet to be addressed
+- ~~Issues relating to tracking page while stream is terminated yet to be addressed~~ [Fixed]
 - Geolocation stream doesn't work if the user sharing the location changes the active app or sleeps the screen. Background location fetching not implemented
 
 ## Release
@@ -18,7 +18,7 @@ Users sharing the location as well as those tracking the location will see how m
 Kindly email me srujanmhase5@gmail.com for an APK if you want to test it\
 Known issues on tracking page while stopping location stream. 
 
-## Beacon - Realtime Location sharing app made with Flutter and firebase.
+## Screenshots
 
 
 
