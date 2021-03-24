@@ -43,6 +43,7 @@ dependencies:
   firebase_core: ^1.0.1
   cloud_firestore: ^1.0.1
   flutter_map: ^0.12.0
+  lottie: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -60,10 +61,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - assets/video.mp4
-  #   - assets/videoa.mp4
-  #   - assets/imagea.jpg
+  assets:
+    - assets/5707-error.json
+    - assets/8001-pulse.json
+    - assets/8135-error-screen.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

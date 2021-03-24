@@ -12,6 +12,8 @@ import 'widgets/gmap.dart';
 import 'blogic/locationUtility.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'widgets/errorScreen.dart';
+import 'widgets/loadingScreen.dart';
 
 class shareScreen extends StatefulWidget {
   final String bCode;
@@ -54,32 +56,10 @@ class _shareScreenState extends State<shareScreen> {
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Material(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("error"),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Go Back"))
-            ],
-          ));
+          return errorScreen();
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Material(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("loading"),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Go Back"))
-            ],
-          ));
+          return loadingScreen();
         }
         if (snapshot.data.data()['lat'] != null) {
           return WillPopScope(

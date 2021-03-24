@@ -7,6 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'widgets/gmap.dart';
 import 'widgets/sharingScreen/currentWatching.dart';
+import 'widgets/errorScreen.dart';
+import 'widgets/loadingScreen.dart';
+import 'widgets/streamingStopped.dart';
 
 class trackingScreen extends StatefulWidget {
   final String bCode;
@@ -38,47 +41,13 @@ class _trackingScreenState extends State<trackingScreen> {
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Material(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("error"),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Go Back"))
-            ],
-          ));
+          return errorScreen();
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Material(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("loading"),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Go Back"))
-            ],
-          ));
+          return loadingScreen();
         }
         if (!snapshot.data.exists) {
-          return Material(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Location sharing has been stopped"),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text("Back"))
-              ],
-            ),
-          );
+          return streamingStopped();
         }
         if (snapshot.data.data()['lat'] != null) {
           return WillPopScope(
