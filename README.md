@@ -16,7 +16,7 @@ Users sharing the location as well as those tracking the location will see how m
 ## Release
 0.1v all features functional\
 Kindly email me srujanmhase5@gmail.com for an APK if you want to test it\
-Known issues on tracking page while stopping location stream. 
+~~Known issues on tracking page while stopping location stream.~~ [Fixed] 
 
 ## Screenshots
 
