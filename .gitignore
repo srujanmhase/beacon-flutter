@@ -48,4 +48,7 @@ AndroidManifest.*
 AppDelegate.*
 google-services.*
 constants.*
+locationUtility.*
+gmap.*
+azureMapWidget.*
 build.*
