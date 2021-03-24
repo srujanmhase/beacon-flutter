@@ -18,23 +18,23 @@ Users sharing the location as well as those tracking the location will see how m
 Kindly email me srujanmhase5@gmail.com for an APK if you want to test it\
 ~~Known issues on tracking page while stopping location stream.~~ [Fixed] 
 
+## Video
+[![Alt text](https://img.youtube.com/vi/1ErahjfumbQ/0.jpg)](https://www.youtube.com/watch?v=1ErahjfumbQ)
+
 ## Screenshots
 
+![image info](/images/ss.png)
+The main screen made purely by flutter widgets - stack, containers. Design implemented from a self made mockup in Adobe XD.
 
-
-![image info](/images/main.jpg)
-The main screen made purely by flutter widgets - stack, containers. Design implemented from a self made mockup in Adobe XD
-
-![image info](/images/share.jpg)
 Screen shown after user clicks on start sharing. User is expected to share their "BCode" using the share icon so others can use it to track them.
 
-![image info](/images/codeshare.jpg)
-Share widget available to users for sending the BCode after they have clicked Start Sharing too.
+![image info](/images/empty.png)
 
-![image info](/images/track.jpg)
-Users can track others using their respective BCodes and join the session. 
+![image info](/images/alg1.png)
+Process workflow for location sharing
 
-NOTE: UI Mockup done, Functionality yet to be implemented (as of 19/03/2021)
+![image info](/images/alg2.png)
+Process workflow for user tracking
 
-![image info](/images/database.JPG)
+![image info](/images/db.png)
 Location being uploaded to the database. This is the document reference (address) the users who wish to track using BCode will be constantly getting updates from.
