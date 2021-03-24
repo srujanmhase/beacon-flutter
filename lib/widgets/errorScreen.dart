@@ -13,7 +13,7 @@ class _errorScreenState extends State<errorScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset('5707-error.json'),
+          Lottie.asset('assets/5707-error.json'),
           Column(
             children: [
               Text(

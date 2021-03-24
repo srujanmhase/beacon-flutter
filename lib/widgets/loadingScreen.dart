@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -15,10 +13,13 @@ class _loadingScreenState extends State<loadingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset('8001-pulse.json'),
+          Lottie.asset('assets/8001-pulse.json'),
+          SizedBox(
+            height: 20,
+          ),
           Text(
             "Loading Session..",
-            style: TextStyle(fontSize: 16, color: Colors.grey),
+            style: TextStyle(fontSize: 20, color: Colors.grey),
           ),
           ElevatedButton(
               onPressed: () {

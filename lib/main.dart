@@ -11,6 +11,7 @@ import 'widgets/homeScreen/startSharing.dart';
 import 'sharingScreen.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lottie/lottie.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -146,11 +147,14 @@ class _loadingState extends State<loading> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Initializing Firebase"),
+          Lottie.asset('assets/8001-pulse.json'),
           SizedBox(
             height: 20,
           ),
-          CupertinoActivityIndicator(),
+          Text(
+            "Loading Beacon",
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
         ],
       ),
     );
@@ -168,7 +172,7 @@ class _errorStateState extends State<errorState> {
     return Material(
       child: Column(
         children: [
-          Icon(Icons.warning),
+          Lottie.asset("assets/5707-error.json"),
           SizedBox(
             height: 20,
           ),

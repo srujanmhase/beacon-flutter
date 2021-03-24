@@ -13,7 +13,7 @@ class _streamingStoppedState extends State<streamingStopped> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset('8135-error-screen.json'),
+          Lottie.asset('assets/8135-error-screen.json'),
           Text(
             "The streaming session has been terminated",
             style: TextStyle(fontSize: 16, color: Colors.grey),
