@@ -1,11 +1,11 @@
 # Beacon - Cross Platform Location Sharing app with Flutter
 
 ## Overview
-    Realtime location tracking app using azure maps and flutter. User can define for how long the location can be shared and starts the stream. Unique session ID "BCode" is generated every time app is launched which the user can share via integrated share plugin or copy to clipboard.
+Realtime location tracking app using azure maps and flutter. User can define for how long the location can be shared and starts the stream. Unique session ID "BCode" is generated every time app is launched which the user can share via integrated share plugin or copy to clipboard.
 
-    Users can track others using the session ID "BCode" by using the tracking feature. 
+Users can track others using the session ID "BCode" by using the tracking feature. 
 
-    Users sharing the location as well as those tracking the location will see how many people are concurrently watching the location stream. Indicated by an int in the top left of the sharing/tracking page.
+Users sharing the location as well as those tracking the location will see how many people are concurrently watching the location stream. Indicated by an int in the top left of the sharing/tracking page.
 
 
 ## Current Status:
