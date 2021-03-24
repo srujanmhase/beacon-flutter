@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:beacon/widgets/azureMapWidget.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +96,11 @@ class _shareScreenState extends State<shareScreen> {
                           height: screenHeight(context, mulBy: 0.8),
                           width: screenWidth(context, mulBy: 1),
                           decoration: BoxDecoration(color: Colors.grey[300]),
-                          child: googleMapsView(
+                          // child: googleMapsView(
+                          //   latitude: snapshot.data.data()['lat'],
+                          //   longitude: snapshot.data.data()['long'],
+                          // ),
+                          child: azureMapsView(
                             latitude: snapshot.data.data()['lat'],
                             longitude: snapshot.data.data()['long'],
                           ),

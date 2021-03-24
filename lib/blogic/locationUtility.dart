@@ -103,3 +103,39 @@ class uploadUtility {
     });
   }
 }
+
+class viewUpdateIncrement {
+  viewUpdateIncrement(docRef) {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('live').doc(docRef);
+
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(documentReference);
+
+      if (!snapshot.exists) {
+        print('Document does not exist');
+      }
+
+      int newViewCount = snapshot.data()['concW'] + 1;
+      transaction.update(documentReference, {'concW': newViewCount});
+    }).then((value) => print("INCREMENTED - UPDATED VIEW COUNT"));
+  }
+}
+
+class viewUpdateDecrement {
+  viewUpdateDecrement(docRef) {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('live').doc(docRef);
+
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(documentReference);
+
+      if (!snapshot.exists) {
+        print('Document does not exist');
+      }
+
+      int newViewCount = snapshot.data()['concW'] - 1;
+      transaction.update(documentReference, {'concW': newViewCount});
+    }).then((value) => print("DECREMENTED - UPDATED VIEW COUNT"));
+  }
+}

@@ -1,3 +1,4 @@
+import 'package:beacon/blogic/locationUtility.dart';
 import 'package:beacon/trackingScreen.dart';
 import 'package:beacon/widgets/homeScreen/startTracking.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ createCupDiag(BuildContext context) {
             CupertinoButton(
                 child: Text("Done"),
                 onPressed: () {
+                  viewUpdateIncrement(bCodeController.text);
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => trackingScreen(
                             bCode: bCodeController.text,
