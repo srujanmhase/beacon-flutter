@@ -1,5 +1,8 @@
+import 'package:beacon/widgets/errorScreen.dart';
 import 'package:beacon/widgets/homeScreen/header.dart';
 import 'package:beacon/widgets/homeScreen/startTracking.dart';
+import 'package:beacon/widgets/loadingScreen.dart';
+import 'package:beacon/widgets/streamingStopped.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
