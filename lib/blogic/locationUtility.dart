@@ -7,33 +7,37 @@ import 'package:flutter/material.dart';
 bool shouldUpload;
 bool onScreen = true;
 
+DateTime setEndTime(startTime, duration) {
+  DateTime endTime;
+
+  switch (duration) {
+    case '10 Minutes':
+      endTime = startTime.add(Duration(minutes: 10));
+      break;
+    case '30 Minutes':
+      endTime = startTime.add(Duration(minutes: 30));
+      break;
+    case '1 Hour':
+      endTime = startTime.add(Duration(hours: 1));
+      break;
+    case '2 Hours':
+      endTime = startTime.add(Duration(hours: 2));
+      break;
+    case '3 Hours':
+      endTime = startTime.add(Duration(hours: 3));
+      break;
+    default:
+      print('Invalid Inputs');
+  }
+  return endTime;
+}
+
 class locationUtility {
   var duration;
 
   Stream<Position> locationStream(
       DateTime startTime, var duration, int frequency) async* {
-    DateTime endTime;
-
-    switch (duration) {
-      case '10 Minutes':
-        endTime = startTime.add(Duration(minutes: 10));
-        break;
-      case '30 Minutes':
-        endTime = startTime.add(Duration(minutes: 30));
-        break;
-      case '1 Hour':
-        endTime = startTime.add(Duration(hours: 1));
-        break;
-      case '2 Hours':
-        endTime = startTime.add(Duration(hours: 2));
-        break;
-      case '3 Hours':
-        endTime = startTime.add(Duration(hours: 3));
-        break;
-      default:
-        print('Invalid Inputs');
-    }
-
+    DateTime endTime = setEndTime(startTime, duration);
     Position currentPosition;
     while (endTime.isAfter(startTime)) {
       print('STARTING GEOLOCATION ATTEMPT');
@@ -47,28 +51,9 @@ class locationUtility {
 class uploadUtility {
   final locationListner = locationUtility();
   bool init = true;
-  DateTime endTime;
 
   uploadUtility(startTime, duration, frequency, docRef, context) {
-    switch (duration) {
-      case '10 Minutes':
-        endTime = startTime.add(Duration(minutes: 10));
-        break;
-      case '30 Minutes':
-        endTime = startTime.add(Duration(minutes: 30));
-        break;
-      case '1 Hour':
-        endTime = startTime.add(Duration(hours: 1));
-        break;
-      case '2 Hours':
-        endTime = startTime.add(Duration(hours: 2));
-        break;
-      case '3 Hours':
-        endTime = startTime.add(Duration(hours: 3));
-        break;
-      default:
-        print('Invalid Inputs');
-    }
+    DateTime endTime = setEndTime(startTime, duration);
 
     locationListner
         .locationStream(startTime, duration, frequency)

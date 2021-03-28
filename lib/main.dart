@@ -1,17 +1,12 @@
-import 'package:beacon/widgets/errorScreen.dart';
 import 'package:beacon/widgets/homeScreen/header.dart';
 import 'package:beacon/widgets/homeScreen/startTracking.dart';
-import 'package:beacon/widgets/loadingScreen.dart';
-import 'package:beacon/widgets/streamingStopped.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:random_string/random_string.dart';
 import 'dart:ui';
 import 'widgets/homeScreen/bgStack.dart';
 import 'widgets/homeScreen/header.dart';
 import 'widgets/homeScreen/startSharing.dart';
-import 'sharingScreen.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
