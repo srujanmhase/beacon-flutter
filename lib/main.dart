@@ -18,8 +18,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
-  await Hive.openBox('localAuth');
-  await Hive.openBox('s');
+  // await Hive.openBox('localAuth');
+  // await Hive.openBox('s');
   runApp(MyApp());
 }
 
@@ -52,7 +52,7 @@ class App extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return checkLocalAuth();
+          return MyHomePage();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
@@ -78,17 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  String getLocalAuthCode() {
-    var key = localAuth.get('key');
-    return key;
-  }
-
   @override
   void initState() {
     super.initState();
     _generateNewBCode();
-    localAuth = Hive.box('localAuth');
-    key = getLocalAuthCode();
   }
 
   @override
