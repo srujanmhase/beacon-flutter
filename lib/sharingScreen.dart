@@ -4,13 +4,10 @@ import 'package:beacon/widgets/azureMapWidget.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
+//import 'package:share_plus/share_plus.dart';
 import 'widgets/sharingScreen/currentWatching.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
-import 'widgets/gmap.dart';
 import 'blogic/locationUtility.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'widgets/errorScreen.dart';
 import 'widgets/loadingScreen.dart';
@@ -177,18 +174,18 @@ class _shareScreenState extends State<shareScreen> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        InkWell(
-                                          onTap: () {
-                                            Share.share(
-                                                'Track me on a map using my BCode ${widget.bCode}',
-                                                subject: 'Look what I made!');
-                                          },
-                                          child: Center(
-                                              child: Icon(
-                                            Icons.share_sharp,
-                                            color: Colors.white,
-                                          )),
-                                        ),
+                                        // InkWell(
+                                        //   onTap: () {
+                                        //     Share.share(
+                                        //         'Track me on a map using my BCode ${widget.bCode}',
+                                        //         subject: 'Look what I made!');
+                                        //   },
+                                        //   child: Center(
+                                        //       child: Icon(
+                                        //     Icons.share_sharp,
+                                        //     color: Colors.white,
+                                        //   )),
+                                        // ),
                                       ],
                                     ),
                                   ],

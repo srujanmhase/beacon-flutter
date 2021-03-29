@@ -8,7 +8,7 @@ import 'package:beacon/sharingScreen.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:random_string/random_string.dart';
 import 'package:clipboard/clipboard.dart';
-import 'package:share_plus/share_plus.dart';
+//import 'package:share_plus/share_plus.dart';
 
 class startSharing extends StatefulWidget {
   final String bCodeGenerated;
@@ -115,15 +115,15 @@ class _startSharingState extends State<startSharing> {
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      Share.share(
-                                          'Track me on a map using my BCode ${widget.bCodeGenerated}',
-                                          subject: 'Look what I made!');
-                                    },
-                                    child:
-                                        Center(child: Icon(Icons.share_sharp)),
-                                  ),
+                                  // InkWell(
+                                  //   onTap: () {
+                                  //     Share.share(
+                                  //         'Track me on a map using my BCode ${widget.bCodeGenerated}',
+                                  //         subject: 'Look what I made!');
+                                  //   },
+                                  //   child:
+                                  //       Center(child: Icon(Icons.share_sharp)),
+                                  // ),
                                 ],
                               ),
                             ],

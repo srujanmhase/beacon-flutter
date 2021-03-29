@@ -4,7 +4,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:share_plus/share_plus.dart';
+//import 'package:share_plus/share_plus.dart';
 import 'widgets/gmap.dart';
 import 'widgets/sharingScreen/currentWatching.dart';
 import 'widgets/errorScreen.dart';
@@ -165,18 +165,18 @@ class _trackingScreenState extends State<trackingScreen> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        InkWell(
-                                          onTap: () {
-                                            Share.share(
-                                                'Track me on a map using my BCode ${widget.bCode}',
-                                                subject: 'Look what I made!');
-                                          },
-                                          child: Center(
-                                              child: Icon(
-                                            Icons.share_sharp,
-                                            color: Colors.white,
-                                          )),
-                                        ),
+                                        // InkWell(
+                                        //   onTap: () {
+                                        //     Share.share(
+                                        //         'Track me on a map using my BCode ${widget.bCode}',
+                                        //         subject: 'Look what I made!');
+                                        //   },
+                                        //   child: Center(
+                                        //       child: Icon(
+                                        //     Icons.share_sharp,
+                                        //     color: Colors.white,
+                                        //   )),
+                                        // ),
                                       ],
                                     ),
                                   ],
