@@ -11,6 +11,7 @@ import 'blogic/locationUtility.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'widgets/errorScreen.dart';
 import 'widgets/loadingScreen.dart';
+import 'package:popup_card/popup_card.dart';
 
 class shareScreen extends StatefulWidget {
   final String bCode;
@@ -90,6 +91,250 @@ class _shareScreenState extends State<shareScreen> {
                     bottom: 0,
                     child: Column(
                       children: [
+                        SizedBox(
+                          width: screenWidth(context, mulBy: 1),
+                          child: Row(
+                            children: [
+                              Expanded(child: Container()),
+                              Column(
+                                children: [
+                                  PopupItemLauncher(
+                                    tag: 'addLocation',
+                                    child: Material(
+                                      color: Colors.white,
+                                      elevation: 2,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(18)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.add_location,
+                                          size: 35,
+                                          color: Color(0xff4E5FF8),
+                                        ),
+                                      ),
+                                    ),
+                                    popUp: PopUpItem(
+                                      padding: EdgeInsets.all(
+                                          8), // Padding inside of the card
+                                      color: Colors.white, // Color of the card
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              18)), // Shape of the card
+                                      elevation: 2, // Elevation of the card
+                                      tag:
+                                          'addLocation', // MUST BE THE SAME AS IN `PopupItemLauncher`
+                                      child: Container(
+                                        width:
+                                            screenWidth(context, mulBy: 0.85),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Text(
+                                              "Add location marker",
+                                              style: TextStyle(fontSize: 22),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: TextFormField(
+                                                decoration: InputDecoration(
+                                                  labelText: "Search",
+                                                  filled: true,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Container(
+                                                  height: 50,
+                                                  width: screenWidth(context,
+                                                      mulBy: 75),
+                                                  decoration: BoxDecoration(
+                                                      color: Color(0xff4E5FF8),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Search",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Text("No Locations added"),
+                                          ],
+                                        ),
+                                      ), // Your custom child widget.
+                                    ),
+                                  ),
+                                  PopupItemLauncher(
+                                    tag: 'addSharing',
+                                    child: Material(
+                                      color: Colors.white,
+                                      elevation: 2,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(18)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.person_add,
+                                          size: 35,
+                                          color: Color(0xff4E5FF8),
+                                        ),
+                                      ),
+                                    ),
+                                    popUp: PopUpItem(
+                                      padding: EdgeInsets.all(
+                                          8), // Padding inside of the card
+                                      color: Colors.white, // Color of the card
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              18)), // Shape of the card
+                                      elevation: 2, // Elevation of the card
+                                      tag:
+                                          'addSharing', // MUST BE THE SAME AS IN `PopupItemLauncher`
+                                      child: Container(
+                                        width:
+                                            screenWidth(context, mulBy: 0.85),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Text(
+                                              "Users sharing location",
+                                              style: TextStyle(fontSize: 22),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text("Srujan Mhase"),
+                                                      Text(
+                                                        "Sharing",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text("John Doe"),
+                                                      Text(
+                                                        "Sharing",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.green),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text("Lerem Ipsum"),
+                                                      Text(
+                                                        "Invited",
+                                                        style: TextStyle(
+                                                            color: Colors.grey),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: TextFormField(
+                                                decoration: InputDecoration(
+                                                  labelText: "UID",
+                                                  filled: true,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Container(
+                                                  height: 50,
+                                                  width: screenWidth(context,
+                                                      mulBy: 75),
+                                                  decoration: BoxDecoration(
+                                                      color: Color(0xff4E5FF8),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Invite",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ), // Your custom child widget.
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                         Container(
                           //height: 25,
                           decoration: BoxDecoration(
@@ -266,7 +511,7 @@ class _shareScreenState extends State<shareScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               )),
             ),

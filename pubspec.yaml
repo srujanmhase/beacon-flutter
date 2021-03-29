@@ -47,6 +47,7 @@ dependencies:
   provider: ^4.3.1
   path_provider: ^1.6.1
   hive_flutter: ^0.3.0+2
+  popup_card: ^0.1.0
 
 dev_dependencies:
   flutter_test:

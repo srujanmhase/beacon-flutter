@@ -142,7 +142,7 @@ class uploadUtility {
 
     subscription = locationStream.listen((location) {
       var now = DateTime.now();
-      shouldUpload = (endTime.isAfter(now)) ? true : false;
+      shouldUpload = (endTime.isAfter(now) && onScreen) ? true : false;
       String nowStr = now.toString();
 
       if (now.isAfter(endTime)) {
@@ -150,8 +150,8 @@ class uploadUtility {
             FirebaseFirestore.instance.collection('live').doc(bCode);
         locationDoc.delete();
         subscription.cancel();
-        Navigator.pop(context);
         onScreen = false;
+        Navigator.pop(context);
       }
 
       if (onScreen == false) {
