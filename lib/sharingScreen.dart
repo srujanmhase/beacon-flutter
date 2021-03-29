@@ -14,9 +14,9 @@ import 'widgets/loadingScreen.dart';
 
 class shareScreen extends StatefulWidget {
   final String bCode;
-  final String duration;
-  final DateTime startTime;
-  const shareScreen({this.bCode, this.duration, this.startTime});
+  //final String duration;
+  //final DateTime startTime;
+  const shareScreen({this.bCode});
 
   @override
   _shareScreenState createState() => _shareScreenState();
@@ -38,6 +38,7 @@ class _shareScreenState extends State<shareScreen> {
   @override
   void initState() {
     super.initState();
+    uploadUtility(context);
   }
 
   double lat;
@@ -45,7 +46,7 @@ class _shareScreenState extends State<shareScreen> {
 
   @override
   Widget build(BuildContext context) {
-    uploadUtility(widget.startTime, widget.duration, 2, widget.bCode, context);
+    //uploadUtility(widget.startTime, widget.duration, 2, widget.bCode, context);
     DocumentReference locationDocument =
         FirebaseFirestore.instance.collection('live').doc(widget.bCode);
     return StreamBuilder<DocumentSnapshot>(

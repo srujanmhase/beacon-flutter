@@ -19,6 +19,7 @@ void main() async {
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   await Hive.openBox('localAuth');
+  await Hive.openBox('s');
   runApp(MyApp());
 }
 

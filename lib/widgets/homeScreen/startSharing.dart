@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:io';
 
 import 'package:beacon/blogic/locationUtility.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:beacon/sharingScreen.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:random_string/random_string.dart';
 import 'package:clipboard/clipboard.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
 //import 'package:share_plus/share_plus.dart';
 
 class startSharing extends StatefulWidget {
@@ -32,6 +35,27 @@ class _startSharingState extends State<startSharing> {
   }
 
   String dropdownValue = '10 Minutes';
+  Box sessionBox;
+
+  void openBox() async {
+    Directory directory = await pathProvider.getApplicationDocumentsDirectory();
+    Hive.init(directory.path);
+    await Hive.openBox('s');
+    sessionBox = Hive.box('s');
+  }
+
+  void setSessionBox(duration, startTime, bCode) {
+    sessionBox.put('duration', duration);
+    sessionBox.put('startTime', startTime);
+    sessionBox.put('bCode', bCode);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    openBox();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,14 +201,22 @@ class _startSharingState extends State<startSharing> {
               InkWell(
                 onTap: () {
                   onScreen = true;
+                  setSessionBox(
+                      dropdownValue, DateTime.now(), widget.bCodeGenerated);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => shareScreen(
                                 bCode: widget.bCodeGenerated,
-                                duration: dropdownValue,
-                                startTime: DateTime.now(),
                               )));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => shareScreen(
+                  //               bCode: widget.bCodeGenerated,
+                  //               duration: dropdownValue,
+                  //               startTime: DateTime.now(),
+                  //             )));
                 },
                 child: Container(
                   width: 250,

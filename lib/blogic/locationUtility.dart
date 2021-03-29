@@ -96,7 +96,7 @@ DateTime setEndTime(startTime, duration) {
 void openBox() async {
   Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
-  await Hive.openBox('session');
+  await Hive.openBox('s');
 }
 
 class geoStream {
@@ -130,7 +130,14 @@ class uploadUtility {
   final locationStream = geoStream().stream;
   var subscription;
 
-  uploadUtility(startTime, duration, frequency, docRef, context) {
+  Box sessionBox;
+
+  uploadUtility(context) {
+    openBox();
+    sessionBox = Hive.box('s');
+    DateTime startTime = sessionBox.get('startTime');
+    String duration = sessionBox.get('duration');
+    String bCode = sessionBox.get('bCode');
     DateTime endTime = setEndTime(startTime, duration);
 
     subscription = locationStream.listen((location) {
@@ -140,7 +147,7 @@ class uploadUtility {
 
       if (now.isAfter(endTime)) {
         DocumentReference locationDoc =
-            FirebaseFirestore.instance.collection('live').doc(docRef);
+            FirebaseFirestore.instance.collection('live').doc(bCode);
         locationDoc.delete();
         subscription.cancel();
         Navigator.pop(context);
@@ -153,7 +160,7 @@ class uploadUtility {
 
       if (init && shouldUpload) {
         DocumentReference locationDoc =
-            FirebaseFirestore.instance.collection('live').doc(docRef);
+            FirebaseFirestore.instance.collection('live').doc(bCode);
         locationDoc.set({
           'lat': location.latitude,
           'long': location.longitude,
@@ -161,17 +168,17 @@ class uploadUtility {
           'latestUpload': nowStr,
           'concW': 0
         });
-        print('SET Added location $location $docRef $now $startTime');
+        print('SET Added location $location $bCode $now $startTime');
         init = false;
       } else if (init != true && shouldUpload) {
         DocumentReference locationDoc =
-            FirebaseFirestore.instance.collection('live').doc(docRef);
+            FirebaseFirestore.instance.collection('live').doc(bCode);
         locationDoc.update({
           'lat': location.latitude,
           'long': location.longitude,
           'latestUpload': nowStr
         });
-        print('UPDATED location $location $docRef $now $startTime');
+        print('UPDATED location $location $bCode $now $startTime');
       }
     });
   }
