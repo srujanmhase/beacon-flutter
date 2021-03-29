@@ -10,9 +10,15 @@ import 'widgets/homeScreen/startSharing.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
+import 'dart:io';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Directory directory = await pathProvider.getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  await Hive.openBox('localAuth');
   runApp(MyApp());
 }
 
@@ -45,7 +51,7 @@ class App extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MyHomePage();
+          return checkLocalAuth();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
@@ -61,6 +67,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String key;
+  Box localAuth;
   String bCodeGenerated;
   void _generateNewBCode() {
     String _nBCodeGenerated = randomAlphaNumeric(10);
@@ -69,10 +77,17 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  String getLocalAuthCode() {
+    var key = localAuth.get('key');
+    return key;
+  }
+
   @override
   void initState() {
     super.initState();
     _generateNewBCode();
+    localAuth = Hive.box('localAuth');
+    key = getLocalAuthCode();
   }
 
   @override
@@ -119,7 +134,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(
                           height: 20,
                         ),
-                        startTracking()
+                        startTracking(),
+                        SizedBox(
+                          height: 20,
+                        ),
                       ],
                     ),
                   ],
@@ -178,5 +196,66 @@ class _errorStateState extends State<errorState> {
         ],
       ),
     );
+  }
+}
+
+class checkLocalAuth extends StatefulWidget {
+  @override
+  _checkLocalAuthState createState() => _checkLocalAuthState();
+}
+
+class _checkLocalAuthState extends State<checkLocalAuth> {
+  Box localAuth;
+  String key;
+
+  String getLocalAuthCode() {
+    var key = localAuth.get('key');
+    return key;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    localAuth = Hive.box('localAuth');
+    key = getLocalAuthCode();
+  }
+
+  void setLocalAuthCode(key) {
+    localAuth.put('key', key);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (key == null) {
+      key = randomAlphaNumeric(7);
+      setLocalAuthCode(key);
+      return Material(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Welcome to Beacon"),
+            Text("Unique user ID is $key"),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                },
+                child: Text("Proceed"))
+          ],
+        ),
+      );
+    }
+    if (key != null) {
+      Future.delayed(Duration(seconds: 0), () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MyHomePage()));
+      });
+      return Material(
+        child: Center(
+          child: CupertinoActivityIndicator(),
+        ),
+      );
+    }
   }
 }
